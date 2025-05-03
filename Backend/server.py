@@ -153,7 +153,7 @@ async def fetch_latest_data():
         print(f"✅ Latest Data Fetched: {json.dumps(data, indent=4)}")
         return data
     except Exception as e:
-        print(f"❌ Error fetching data from DynamoDB: {e}")
+        print(f" Error fetching data from DynamoDB: {e}")
         return {}
 
 
@@ -163,14 +163,14 @@ async def handle_client(websocket):
         try:
             message = await websocket.recv()
             received_data = json.loads(message)
-            print("📩 Received from client:", json.dumps(received_data, indent=4))
+            print(" Received from client:", json.dumps(received_data, indent=4))
 
         except websockets.exceptions.ConnectionClosed:
-            print("⚠️ Client disconnected.")
+            print(" Client disconnected.")
             break
 
         except Exception as e:
-            print(f"❌ Error receiving data from client: {e}")
+            print(f" Error receiving data from client: {e}")
             break
 
 
@@ -184,14 +184,14 @@ async def send_data_to_clients(websocket, path):
 
             if data:
                 await websocket.send(json.dumps(data))
-                print(f"🚀 Sent to client: {json.dumps(data, indent=4)}")
+                print(f" Sent to client: {json.dumps(data, indent=4)}")
             else:
-                print("⚠️ No new data to send.")
+                print(" No new data to send.")
 
             await asyncio.sleep(1)  # Fetch every second
 
     except Exception as e:
-        print(f"❌ Error sending data to client: {e}")
+        print(f" Error sending data to client: {e}")
 
     finally:
         receive_task.cancel()
