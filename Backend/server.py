@@ -111,7 +111,7 @@ from boto3.dynamodb.conditions import Key
 
 # Initialize DynamoDB resource
 dynamodb = boto3.resource("dynamodb", region_name="us-east-1")
-table = dynamodb.Table("mavex_db")
+table = dynamodb.Table("project1_db")
 
 
 # Custom JSON encoder to handle Decimal objects from DynamoDB
@@ -138,8 +138,7 @@ async def fetch_latest_data():
         data = {
             "SensorData": {
                 "heartRate": 0,
-                "temperature": 0.0,
-                "ecg": 0
+                "temperature": 0.0
             }
         }
 
@@ -150,7 +149,6 @@ async def fetch_latest_data():
             # Extract sensor data
             data["SensorData"]["heartRate"] = int(payload.get("heartRate", {}).get("N", 0))
             data["SensorData"]["temperature"] = float(payload.get("temperature", {}).get("N", 0.0))
-            data["SensorData"]["ecg"] = int(payload.get("ecg", {}).get("N", 0))
 
         print(f"✅ Latest Data Fetched: {json.dumps(data, indent=4)}")
         return data
